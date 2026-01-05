@@ -27,6 +27,7 @@ export const  postContact = asyncHandler(async(req, res) => {
         throw new Error('All fields are required');
     }
     const contact = await Contact.create({
+        user: req.user.id,
         name,
         email,
         phone,

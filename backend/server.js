@@ -1,17 +1,21 @@
 import express from 'express';
-import contactRoute from './routes/contactRoute.js';
 import dotenv from 'dotenv';
 import errorHandler from './middlewares/errorHandler.js';
 import connectDB from './config/dbConnection.js';
 import userRouter from './routes/userRoute.js';
+import taskRouter from './routes/taskRoute.js';
+import swaggerUi from "swagger-ui-express";
+import specs from "./swagger/swagger.js";
 
 dotenv.config();
 connectDB();
 
 const app = express();
 app.use(express.json());
-app.use('/api/contacts', contactRoute);
+
 app.use('/api/user', userRouter);
+app.use('/api/task', taskRouter);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use(errorHandler);
 
